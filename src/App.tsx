@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   MapPin,
@@ -211,6 +212,7 @@ function useCountdown(initialSeconds: number) {
 }
 
 export default function App() {
+  const navigate = useNavigate();
   const [cart, setCart] = useState<Record<string, number>>({
     tomato: 1,
     banana: 1,
@@ -462,6 +464,10 @@ export default function App() {
                   <button
                     key={c.name}
                     onClick={() => {
+                      if (c.name === "Fruits") {
+                        navigate("/fruits");
+                        return;
+                      }
                       setSelectedCategory(c.name);
                       showToast(`Filtered by ${c.name}`);
                     }}
@@ -1356,6 +1362,11 @@ export default function App() {
                 <button
                   key={c.name}
                   onClick={() => {
+                    if (c.name === "Fruits") {
+                      setMobileNav(false);
+                      navigate("/fruits");
+                      return;
+                    }
                     setSelectedCategory(c.name);
                     setMobileNav(false);
                     showToast(`Selected ${c.name}`);
