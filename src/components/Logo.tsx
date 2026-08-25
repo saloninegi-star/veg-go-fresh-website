@@ -1,92 +1,142 @@
 import React from "react";
 
-export function VegGoLogo({ className = "h-10 w-auto" }: { className?: string }) {
+export function VegGoLogo({
+  className = "h-14 w-auto",
+}: {
+  className?: string;
+}) {
   return (
-    <div className={`flex items-center gap-2 select-none cursor-pointer ${className}`}>
-      <svg viewBox="0 0 160 56" className="h-full w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Leaf sprout icon */}
-        <g transform="translate(4, 2)">
-          {/* Main Leaf */}
+    <div
+      className={`flex items-center select-none cursor-pointer ${className}`}
+    >
+      <svg
+        viewBox="0 0 190 90"
+        className="h-full w-auto"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <style type="text/css">
+            {`
+              @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800;900&display=swap');
+              
+              .logo-text-veggo {
+                font-family: 'Poppins', -apple-system, sans-serif;
+                font-size: 48px;
+                font-weight: 900;
+                letter-spacing: -2px;
+              }
+
+              .logo-text-fresh {
+                font-family: 'Poppins', -apple-system, sans-serif;
+                font-size: 11.5px;
+                font-weight: 800;
+                letter-spacing: 0.28em;
+              }
+            `}
+          </style>
+        </defs>
+
+        {/* =========================
+            LEAF / SPROUT (Centered at x=98)
+        ========================== */}
+        <g transform="translate(80, 0)">
+          {/* Stem */}
           <path
-            d="M24 2C24 2 34 8 36 22C32 26 22 28 14 20C12 12 18 4 24 2Z"
-            fill="url(#leafGrad)"
+            d="M17 38 C17 29 15 21 10 13"
+            stroke="#16852F"
+            strokeWidth="2.5"
+            strokeLinecap="round"
           />
-          {/* Side Leaf */}
+
           <path
-            d="M12 14C12 14 6 18 6 26C10 28 18 28 20 22C20 18 16 14 12 14Z"
-            fill="url(#leafGrad2)"
+            d="M17 38 C18 28 22 20 30 13"
+            stroke="#16852F"
+            strokeWidth="2.5"
+            strokeLinecap="round"
           />
-          {/* Stylized V branch */}
+
+          {/* Left Leaf (Slightly Smaller & Curved) */}
           <path
-            d="M14 26L26 44L38 18L30 18L24 33L18 22L14 26Z"
-            fill="url(#goldGrad)"
+            d="
+              M17 34
+              C11 31 5 25 4 16
+              C4 11 5 8 6 6
+              C14 9 19 15 20 23
+              C20 28 19 32 17 34
+              Z
+            "
+            fill="#4BAF3D"
+          />
+
+          {/* Left Leaf Vein */}
+          <path
+            d="M17 32 C13 23 9 16 6 8.5"
+            stroke="#E8F5E5"
+            strokeWidth="1.3"
+            strokeLinecap="round"
+            opacity="0.8"
+          />
+
+          {/* Right Leaf (Slightly Longer/Taller) */}
+          <path
+            d="
+              M18 34
+              C21 24 28 13 41 5
+              C42 4 43 4 44 4
+              C42 16 38 27 30 32
+              C25 34 21 35 18 34
+              Z
+            "
+            fill="#3F9F36"
+          />
+
+          {/* Right Leaf Vein */}
+          <path
+            d="M20 32 C26 23 34 14 41.5 6"
+            stroke="#E8F5E5"
+            strokeWidth="1.3"
+            strokeLinecap="round"
+            opacity="0.8"
           />
         </g>
 
-        {/* VegGo text */}
+        {/* =========================
+            VEGGO BRAND NAME 
+            (Aligned tightly at x=98)
+        ========================== */}
         <text
-          x="50"
-          y="34"
-          fontFamily="'Poppins', sans-serif"
-          fontWeight="800"
-          fontSize="28"
-          fill="#2E7D32"
-          letterSpacing="-0.5"
+          x="98"
+          y="66"
+          className="logo-text-veggo"
+          textAnchor="end"
+          fill="#16852F"
         >
           Veg
-          <tspan fill="#E5A93C">Go</tspan>
         </text>
 
-        {/* Small Leaf over Go */}
-        <path
-          d="M140 12C140 12 144 14 145 18C143 19 140 19 138 17C137 15 138 13 140 12Z"
-          fill="#3F9142"
-        />
-
-        {/* FRESH subtext */}
-        <g transform="translate(52, 42)">
-          <line x1="0" y1="4" x2="16" y2="4" stroke="#7BA87D" strokeWidth="1" strokeLinecap="round" />
-          <text
-            x="22"
-            y="7"
-            fontFamily="'Poppins', sans-serif"
-            fontWeight="600"
-            fontSize="8"
-            fill="#3F9142"
-            letterSpacing="3"
-          >
-            FRESH
-          </text>
-          <line x1="72" y1="4" x2="88" y2="4" stroke="#7BA87D" strokeWidth="1" strokeLinecap="round" />
-        </g>
-
-        {/* Tagline */}
         <text
-          x="50"
-          y="53"
-          fontFamily="'Inter', sans-serif"
-          fontWeight="500"
-          fontSize="4.5"
-          fill="#768B78"
-          letterSpacing="1.2"
+          x="98"
+          y="66"
+          className="logo-text-veggo"
+          textAnchor="start"
+          fill="#F46B16"
         >
-          FRESH. FAST. TRUSTED.
+          Go
         </text>
 
-        <defs>
-          <linearGradient id="leafGrad" x1="14" y1="2" x2="36" y2="28" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#55B358" />
-            <stop offset="1" stopColor="#1E5F26" />
-          </linearGradient>
-          <linearGradient id="leafGrad2" x1="6" y1="14" x2="20" y2="28" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#7CD97F" />
-            <stop offset="1" stopColor="#2E7D32" />
-          </linearGradient>
-          <linearGradient id="goldGrad" x1="14" y1="18" x2="38" y2="44" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#F5BE4D" />
-            <stop offset="1" stopColor="#D48B1B" />
-          </linearGradient>
-        </defs>
+        {/* =========================
+            FRESH - Starts exactly from the Veg/Go junction (x=98)
+        ========================== */}
+        <text
+          x="98"
+          y="81"
+          className="logo-text-fresh"
+          textAnchor="start"
+          fill="#16852F"
+        >
+          FRESH
+        </text>
       </svg>
     </div>
   );
