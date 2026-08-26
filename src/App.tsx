@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import LeafyGreensPage from "./pages/LeafyGreensPage";
 import {
   Search,
   MapPin,
@@ -463,14 +464,24 @@ export default function App() {
                 return (
                   <button
                     key={c.name}
-                    onClick={() => {
-                      if (c.name === "Fruits") {
-                        navigate("/fruits");
-                        return;
-                      }
-                      setSelectedCategory(c.name);
-                      showToast(`Filtered by ${c.name}`);
-                    }}
+                  onClick={() => {
+  if (c.name === "Fruits") {
+    navigate("/fruits");
+    return;
+  }
+
+  if (c.name === "Leafy Greens") {
+    navigate("/leafy-greens");
+    return;
+  }
+
+  if (c.name === "Herbs & Seasoning") {
+    navigate("/herbs-seasoning");
+    return;
+  }
+  setSelectedCategory(c.name);
+  showToast(`Filtered by ${c.name}`);
+}}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left ${
                       isSelected
                         ? "bg-[#E2F0E0] text-[#135029] shadow-2xs"
@@ -1361,16 +1372,27 @@ export default function App() {
               {CATEGORIES.map((c) => (
                 <button
                   key={c.name}
-                  onClick={() => {
-                    if (c.name === "Fruits") {
-                      setMobileNav(false);
-                      navigate("/fruits");
-                      return;
-                    }
-                    setSelectedCategory(c.name);
-                    setMobileNav(false);
-                    showToast(`Selected ${c.name}`);
-                  }}
+                onClick={() => {
+  if (c.name === "Fruits") {
+    setMobileNav(false);
+    navigate("/fruits");
+    return;
+  }
+
+  if (c.name === "Leafy Greens") {
+    setMobileNav(false);
+    navigate("/leafy-greens");
+    return;
+  }
+ if (c.name === "Herbs & Seasoning") { 
+    setMobileNav(false); 
+    navigate("/herbs-seasoning"); 
+    return; 
+  } 
+  setSelectedCategory(c.name);
+  setMobileNav(false);
+  showToast(`Selected ${c.name}`);
+}}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold ${
                     selectedCategory === c.name ? "bg-[#EAF6EA] text-[#135029]" : "text-slate-700"
                   }`}
