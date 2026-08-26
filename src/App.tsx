@@ -42,7 +42,7 @@ import {
 } from "lucide-react";
 
 // Import custom vegetable cursor
-import VegetableCursor from "./components/VegetableCursor";
+
 
 // Real uploaded brand assets
 import heroBasket from "./assets/images/hero-basket-removebg-preview.png";
@@ -307,8 +307,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FBFDFB] text-slate-800 flex flex-col" style={fontBody}>
-      {/* ================= CUSTOM CURSOR ================= */}
-      <VegetableCursor />
+    
 
       {/* ================= TOAST ================= */}
       {toastMsg && (
@@ -476,6 +475,10 @@ export default function App() {
   }
 
   if (c.name === "Herbs & Seasoning") {
+    navigate("/herbs-seasoning");
+    return;
+  }
+  if (c.name === "Exotic Vegeables") {
     navigate("/herbs-seasoning");
     return;
   }
@@ -789,6 +792,7 @@ export default function App() {
                   return (
                     <div
                       key={p.id}
+                        onClick={() => navigate(`/product/${p.id}`)}
                       className="rounded-2xl p-3 flex flex-col justify-between bg-white hover:shadow-md transition-all duration-200 group border border-[#EEF4ED] shrink-0 w-[150px] sm:w-[170px]"
                     >
                       {/* Product Image Container */}
@@ -823,14 +827,14 @@ export default function App() {
                           {inCartQty > 0 ? (
                             <div className="flex items-center gap-1.5 bg-[#135029] text-white rounded-lg px-2 py-1 shadow-md h-7">
                               <button
-                                onClick={() => removeFromCart(p.id)}
+                                onClick={(e) => { e.stopPropagation(); removeFromCart(p.id); }}
                                 className="w-3.5 h-3.5 flex items-center justify-center hover:opacity-80 active:scale-90"
                               >
                                 <Minus className="w-2.5 h-2.5 text-white stroke-[3px]" />
                               </button>
                               <span className="text-xs font-bold w-3 text-center leading-none">{inCartQty}</span>
                               <button
-                                onClick={() => addToCart(p.id)}
+                                  onClick={(e) => { e.stopPropagation(); addToCart(p.id); }}
                                 className="w-3.5 h-3.5 flex items-center justify-center hover:opacity-80 active:scale-90"
                               >
                                 <Plus className="w-2.5 h-2.5 text-white stroke-[3px]" />

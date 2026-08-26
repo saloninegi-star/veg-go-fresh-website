@@ -1,5 +1,6 @@
 import {
   ArrowLeft,
+  ArrowRight,
   Cherry,
   Plus,
   ShoppingCart,
@@ -16,11 +17,69 @@ import {
   Flower2,
   Minus,
   X,
+  Search,
+  MapPin,
+  ChevronDown,
+  Bot,
+  User,
+  Menu,
+  Instagram,
+  Facebook,
+  Twitter,
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fruits from "../assets/images/fruits.png";
-import VegetableCursor from "../components/VegetableCursor";
+
+
+/* ---------------------------------------------------------------------- */
+/*  Brand Colors                                                          */
+/* ---------------------------------------------------------------------- */
+const BRAND = {
+  forestGreen: "#135029",
+};
+
+/* ---------------------------------------------------------------------- */
+/*  VegGo Vector Logo Component                                           */
+/* ---------------------------------------------------------------------- */
+export function VegGoLogo({ className = "h-10 w-auto" }: { className?: string }) {
+  return (
+    <div className={`flex items-center select-none cursor-pointer ${className}`}>
+      <svg viewBox="0 0 180 90" className="h-full w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style type="text/css">
+            {`
+              @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800;900&display=swap');
+              .logo-text-veggo {
+                font-family: 'Poppins', sans-serif;
+                font-size: 48px;
+                font-weight: 900;
+                letter-spacing: -2px;
+              }
+              .logo-text-fresh {
+                font-family: 'Poppins', sans-serif;
+                font-size: 11.5px;
+                font-weight: 800;
+                letter-spacing: 0.28em;
+              }
+            `}
+          </style>
+        </defs>
+        <g transform="translate(80, 2)">
+          <path d="M17 38 C17 29 15 21 10 13" stroke="#128238" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M17 38 C18 28 22 20 30 13" stroke="#128238" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M17 34 C11 31 5 25 4 16 C4 11 5 8 6 6 C14 9 19 15 20 23 C20 28 19 32 17 34 Z" fill="#4BAF3D" />
+          <path d="M17 32 C13 23 9 16 6 8.5" stroke="#E8F5E5" strokeWidth="1.3" strokeLinecap="round" opacity="0.8" />
+          <path d="M18 34 C21 24 28 13 41 5 C42 4 43 4 44 4 C42 16 38 27 30 32 C25 34 21 35 18 34 Z" fill="#3F9F36" />
+          <path d="M20 32 C26 23 34 14 41.5 6" stroke="#E8F5E5" strokeWidth="1.3" strokeLinecap="round" opacity="0.8" />
+        </g>
+        <text x="98" y="68" className="logo-text-veggo" textAnchor="end" fill="#128238">Veg</text>
+        <text x="98" y="68" className="logo-text-veggo" textAnchor="start" fill="#F46B16">Go</text>
+        <text x="98" y="81" className="logo-text-fresh" textAnchor="start" fill="#128238">FRESH</text>
+      </svg>
+    </div>
+  );
+}
 
 const CATEGORIES = [
   { name: "Vegetables", icon: Salad },
@@ -36,9 +95,14 @@ const CATEGORIES = [
   { name: "Plants & Pots", icon: Flower2 },
 ];
 
+/* ---------------------------------------------------------------------- */
+/*  `slug` maps each fruit to its id inside ProductDetailPage.tsx's       */
+/*  PRODUCT_CATALOG, so clicking a card opens the matching detail page.   */
+/* ---------------------------------------------------------------------- */
 const fruitProducts = [
   {
     id: 1,
+    slug: "apple",
     name: "Fresh Apples",
     weight: "1 kg",
     price: 120,
@@ -48,6 +112,7 @@ const fruitProducts = [
   },
   {
     id: 2,
+    slug: "banana",
     name: "Fresh Bananas",
     weight: "1 dozen",
     price: 40,
@@ -57,6 +122,7 @@ const fruitProducts = [
   },
   {
     id: 3,
+    slug: "strawberry",
     name: "Fresh Strawberries",
     weight: "250 g",
     price: 90,
@@ -66,6 +132,7 @@ const fruitProducts = [
   },
   {
     id: 4,
+    slug: "dragonfruit",
     name: "Dragon Fruit",
     weight: "2 pcs",
     price: 140,
@@ -75,6 +142,7 @@ const fruitProducts = [
   },
   {
     id: 5,
+    slug: "kiwi",
     name: "Fresh Kiwi",
     weight: "4 pcs",
     price: 110,
@@ -84,6 +152,7 @@ const fruitProducts = [
   },
   {
     id: 6,
+    slug: "orange",
     name: "Fresh Oranges",
     weight: "1 kg",
     price: 80,
@@ -105,6 +174,11 @@ export default function FruitsPage() {
   const [popup, setPopup] = useState("");
   const [showCart, setShowCart] = useState(false);
 
+  // Navbar related state
+  const [mobileNav, setMobileNav] = useState(false);
+  const [aiModalOpen, setAiModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const handleCategoryClick = (categoryName: string) => {
     if (categoryName === "Vegetables") {
       navigate("/");
@@ -115,6 +189,14 @@ export default function FruitsPage() {
         top: 0,
         behavior: "smooth",
       });
+    }
+
+    if (categoryName === "Leafy Greens") {
+      navigate("/leafy-greens");
+    }
+
+    if (categoryName === "Herbs & Seasoning") {
+      navigate("/herbs-seasoning");
     }
   };
 
@@ -183,47 +265,137 @@ export default function FruitsPage() {
 
   return (
     <div className="min-h-screen bg-[#FBFDFB] text-slate-800">
-      <VegetableCursor />
+    
 
+      {/* ================= TOP UTILITY BAR ================= */}
+      <div className="bg-[#EAF6EA] text-[#1E5F26] border-b border-[#D8EBD7] px-4 lg:px-10 py-1.5 text-xs hidden md:flex items-center justify-between">
+        <div className="flex items-center gap-1.5 font-medium">
+          <Leaf className="w-3.5 h-3.5 text-[#228B22]" />
+          <span>Eat Fresh, Live Healthy</span>
+        </div>
+
+        <div className="flex items-center gap-1 cursor-pointer hover:opacity-90 transition">
+          <MapPin className="w-3.5 h-3.5 text-[#228B22]" />
+          <span>
+            Delivering to:{" "}
+            <strong className="font-semibold text-[#113B1E]">
+              Kukatpally, Hyderabad
+            </strong>
+          </span>
+          <ChevronDown className="w-3 h-3 text-slate-500 ml-0.5" />
+        </div>
+
+        <div className="flex items-center gap-4 text-[11px] font-medium text-[#1E5F26]">
+          <button className="hover:underline">Become a Seller</button>
+          <span className="text-[#C2DEC1]">|</span>
+          <button className="hover:underline">Offers</button>
+          <span className="text-[#C2DEC1]">|</span>
+          <button className="hover:underline">Help &amp; Support</button>
+          <div className="flex items-center gap-2.5 ml-2 pl-3 border-l border-[#C2DEC1]">
+            <Instagram className="w-3.5 h-3.5 cursor-pointer hover:text-black transition" />
+            <Facebook className="w-3.5 h-3.5 cursor-pointer hover:text-black transition" />
+            <Twitter className="w-3.5 h-3.5 cursor-pointer hover:text-black transition" />
+          </div>
+        </div>
+      </div>
+
+      {/* ================= MAIN HEADER NAVBAR ================= */}
       <header className="sticky top-0 z-40 bg-white border-b border-[#EEF4ED] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
         <div className="max-w-[1400px] mx-auto px-4 lg:px-8 py-3 flex items-center justify-between gap-4">
           <button
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-[#135029] text-xs font-bold hover:bg-[#F4FAF4] transition"
+            onClick={() => setMobileNav(true)}
+            className="lg:hidden p-1.5 rounded-lg hover:bg-emerald-50 text-slate-700"
+            aria-label="Open menu"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
+            <Menu className="w-6 h-6" />
           </button>
 
-          <div className="text-center">
-            <div className="text-2xl font-black leading-none">
-              <span className="text-[#128238]">Veg</span>
-              <span className="text-[#F46B16]">Go</span>
-            </div>
-
-            <div className="text-[9px] font-extrabold tracking-[0.28em] text-[#128238] mt-1">
-              FRESH
-            </div>
+          <div
+            className="flex items-center cursor-pointer shrink-0"
+            onClick={() => navigate("/")}
+          >
+            <VegGoLogo className="h-10 md:h-12 w-auto" />
           </div>
 
           <button
-            onClick={() => setShowCart(true)}
-            className="relative flex items-center gap-2 text-[#135029] hover:bg-[#F4FAF4] px-3 py-2 rounded-lg transition"
+            onClick={() => navigate("/")}
+            className="hidden lg:flex items-center gap-2 px-4 py-2.5 rounded-lg text-white text-xs font-bold tracking-wide shrink-0 transition hover:brightness-105 active:scale-98"
+            style={{ backgroundColor: BRAND.forestGreen }}
           >
-            <div className="relative">
-              <ShoppingCart className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Home</span>
+          </button>
 
-              {totalCartItems > 0 && (
-                <span className="absolute -top-2 -right-2 min-w-[17px] h-[17px] px-1 rounded-full bg-[#F46B16] text-white text-[9px] font-black flex items-center justify-center">
-                  {totalCartItems}
-                </span>
-              )}
+          <div className="flex-1 max-w-xl hidden sm:flex items-center border border-[#DCE8DA] rounded-lg overflow-hidden bg-white focus-within:ring-2 focus-within:ring-[#228B22]/30 transition">
+            <input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search for fresh fruits and more..."
+              className="flex-1 px-4 py-2 text-xs md:text-sm outline-none text-slate-700 placeholder:text-slate-400 min-w-0"
+            />
+            <div className="flex items-center gap-1 px-3 border-l border-[#DCE8DA] text-xs text-slate-500 bg-slate-50/50 cursor-pointer">
+              <span>All</span>
+              <ChevronDown className="w-3 h-3 text-slate-400" />
+            </div>
+            <button
+              className="px-3.5 py-2.5 text-white transition hover:brightness-105"
+              style={{ backgroundColor: BRAND.forestGreen }}
+              aria-label="Search"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+          </div>
+
+          <div className="flex items-center gap-4 md:gap-6">
+            <div
+              onClick={() => setAiModalOpen(true)}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#F0F8EE] border border-[#D5EAD3] cursor-pointer hover:bg-[#E5F3E3] transition"
+            >
+              <div className="w-7 h-7 rounded-full bg-[#135029] flex items-center justify-center text-emerald-200">
+                <Bot className="w-4 h-4" />
+              </div>
+              <div className="leading-tight text-left hidden sm:block">
+                <div className="text-[11px] font-bold text-[#113B1E]">VegGo</div>
+                <div className="text-[9px] text-[#4A7C54] font-medium">AI Assistant</div>
+              </div>
             </div>
 
-            <span className="hidden sm:block text-xs font-bold">
-              Fresh Fruits
-            </span>
-          </button>
+            <div className="hidden md:flex items-center gap-2 cursor-pointer hover:opacity-80 transition">
+              <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 bg-slate-50">
+                <User className="w-4 h-4" />
+              </div>
+              <div className="leading-tight text-left">
+                <div className="text-[10px] text-slate-500 font-medium">My Account</div>
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-0.5">
+                  <span>Hello, Shiva</span>
+                  <ChevronDown className="w-3 h-3 text-slate-400" />
+                </div>
+              </div>
+            </div>
+
+            <div
+              onClick={() => setShowCart(true)}
+              className="flex items-center gap-2.5 cursor-pointer hover:opacity-90 transition select-none"
+            >
+              <div className="relative">
+                <ShoppingCart className="w-6 h-6 text-[#111827]" />
+                {totalCartItems > 0 && (
+                  <span
+                    className="absolute -top-2 -right-2 text-[10px] w-4 h-4 rounded-full flex items-center justify-center text-white font-extrabold"
+                    style={{ backgroundColor: BRAND.forestGreen }}
+                  >
+                    {totalCartItems}
+                  </span>
+                )}
+              </div>
+              <div className="leading-tight text-left hidden sm:block">
+                <div className="text-[10px] text-slate-500 font-medium">Cart</div>
+                <div className="text-xs font-bold text-[#111827]">
+                  ₹{totalCartPrice.toFixed(2)}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -364,7 +536,8 @@ export default function FruitsPage() {
                   return (
                     <div
                       key={fruit.id}
-                      className="rounded-2xl p-3 flex flex-col justify-between bg-white hover:shadow-md transition-all duration-200 group border border-[#EEF4ED]"
+                      onClick={() => navigate(`/product/${fruit.slug}`)}
+                      className="rounded-2xl p-3 flex flex-col justify-between bg-white hover:shadow-md transition-all duration-200 group border border-[#EEF4ED] cursor-pointer"
                     >
                       <div className="h-32 sm:h-36 w-full overflow-hidden rounded-xl bg-slate-50 mb-2.5">
                         <img
@@ -398,7 +571,10 @@ export default function FruitsPage() {
 
                         {quantity === 0 ? (
                           <button
-                            onClick={() => addToCart(fruit)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addToCart(fruit);
+                            }}
                             className="w-7 h-7 rounded-lg bg-[#135029] text-white flex items-center justify-center hover:bg-[#1E7D32] transition active:scale-95"
                             aria-label={`Add ${fruit.name}`}
                           >
@@ -407,7 +583,10 @@ export default function FruitsPage() {
                         ) : (
                           <div className="flex items-center gap-1 bg-[#EAF5E9] rounded-lg p-1">
                             <button
-                              onClick={() => decreaseQuantity(fruit.id)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                decreaseQuantity(fruit.id);
+                              }}
                               className="w-6 h-6 rounded-md bg-white text-[#135029] flex items-center justify-center hover:bg-[#DCEAD9] transition"
                             >
                               <Minus className="w-3.5 h-3.5 stroke-[3]" />
@@ -418,7 +597,8 @@ export default function FruitsPage() {
                             </span>
 
                             <button
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.stopPropagation();
                                 increaseQuantity(fruit.id);
                                 setPopup(`${fruit.name} added to cart`);
 
@@ -638,6 +818,86 @@ export default function FruitsPage() {
               </>
             )}
           </div>
+        </div>
+      )}
+
+      {/* ================= AI ASSISTANT MODAL ================= */}
+      {aiModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-[#D5EAD3] overflow-hidden flex flex-col">
+            <div className="p-4 bg-[#135029] text-white flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Bot className="w-5 h-5 text-emerald-300" />
+                <h3 className="text-sm font-bold">VegGo Smart Assistant</h3>
+              </div>
+              <button
+                onClick={() => setAiModalOpen(false)}
+                className="text-white/80 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4 space-y-3 text-left text-xs bg-[#F4FAF4]">
+              <div className="p-3 bg-white rounded-xl border border-[#D5EAD3] text-slate-700 shadow-2xs">
+                👋 Hello Shiva! What fruit-based recipe or tip do you need today?
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {["Fresh Fruit Salad Ideas", "How to ripen fruits faster", "Best fruits for smoothies"].map(
+                  (q) => (
+                    <button
+                      key={q}
+                      className="px-2.5 py-1 rounded-full bg-white border border-[#C2DEC1] text-[#135029] font-medium hover:bg-[#EAF6EA] transition text-[11px]"
+                    >
+                      {q}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+          </div>
+          <div
+            className="fixed inset-0 bg-black/40 -z-10"
+            onClick={() => setAiModalOpen(false)}
+          />
+        </div>
+      )}
+
+      {/* ================= MOBILE NAVIGATION DRAWER ================= */}
+      {mobileNav && (
+        <div className="fixed inset-0 z-50 flex">
+          <div className="w-72 bg-white h-full shadow-2xl p-5 overflow-y-auto flex flex-col text-left relative z-50">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+              <VegGoLogo className="h-9 w-auto" />
+              <button
+                onClick={() => setMobileNav(false)}
+                className="p-1 rounded-lg hover:bg-slate-100"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-1 flex-1">
+              {CATEGORIES.map((c) => (
+                <button
+                  key={c.name}
+                  onClick={() => {
+                    setMobileNav(false);
+                    handleCategoryClick(c.name);
+                  }}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold ${
+                    c.active ? "bg-[#EAF6EA] text-[#135029]" : "text-slate-700"
+                  }`}
+                >
+                  <c.icon className="w-4 h-4 text-[#2E7D32]" />
+                  <span>{c.name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div
+            className="flex-1 bg-black/40 fixed inset-0 z-40"
+            onClick={() => setMobileNav(false)}
+          />
         </div>
       )}
     </div>

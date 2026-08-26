@@ -42,7 +42,7 @@ import {
 } from "lucide-react";
 
 // Custom cursor and assets
-import VegetableCursor from "../components/VegetableCursor";
+
 import leafyGreens from "../assets/images/leafy-greens.jpg";
 
 /* ---------------------------------------------------------------------- */
@@ -263,8 +263,7 @@ export default function LeafyGreensPage() {
 
   return (
     <div className="min-h-screen bg-[#FBFDFB] text-slate-800 flex flex-col" style={fontBody}>
-      {/* ================= CUSTOM CURSOR ================= */}
-      <VegetableCursor />
+    
 
       {/* ================= TOAST ================= */}
       {toastMsg && (
@@ -643,31 +642,6 @@ export default function LeafyGreensPage() {
           </div>
         </div>
 
-        {/* Floating AI Assistant Widget */}
-        <div className="fixed right-5 bottom-5 z-30 flex flex-col items-center">
-          <div
-            onClick={() => setAiModalOpen(true)}
-            className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full border-[3.5px] border-[#135029] shadow-xl flex items-center justify-center cursor-pointer hover:scale-105 transition duration-300 select-none relative"
-          >
-            <svg viewBox="0 0 100 100" className="w-12 h-12">
-              <circle cx="50" cy="50" r="38" fill="#ffffff" />
-              <rect x="24" y="34" width="52" height="32" rx="16" fill="#e2e8f0" />
-              <circle cx="38" cy="50" r="8" fill="#0f172a" />
-              <circle cx="38" cy="47" r="2" fill="#ffffff" />
-              <circle cx="62" cy="50" r="8" fill="#0f172a" />
-              <circle cx="62" cy="47" r="2" fill="#ffffff" />
-              <rect x="48" y="16" width="4" height="12" fill="#135029" rx="2" />
-              <circle cx="50" cy="15" r="4" fill="#22c55e" />
-              <rect x="18" y="42" width="6" height="16" rx="3" fill="#135029" />
-              <rect x="76" y="42" width="6" height="16" rx="3" fill="#135029" />
-              <path d="M 44 57 Q 50 62 56 57" stroke="#0f172a" strokeWidth="2.2" strokeLinecap="round" fill="none" />
-            </svg>
-          </div>
-          <div className="text-[10px] font-black text-slate-900 mt-2 bg-white px-3 py-1 rounded-full shadow-lg border border-slate-100 leading-tight">
-            <div className="text-[#135029] text-center font-black">VegGo</div>
-            <div className="text-slate-500 text-[8px] font-bold">AI Assistant</div>
-          </div>
-        </div>
       </main>
 
       
@@ -833,7 +807,20 @@ export default function LeafyGreensPage() {
           <div className="flex-1 bg-black/40 fixed inset-0 z-40" onClick={() => setMobileNav(false)} />
         </div>
       )}
+<footer className="mt-8 bg-white border-t border-[#E8F2E6] py-6 px-4 lg:px-8">
+        <div className="max-w-[1400px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500">
+          <span>
+            © {new Date().getFullYear()} VegGo Fresh Technologies Pvt. Ltd.
+          </span>
 
+          <button
+            onClick={() => navigate("/")}
+            className="text-[#135029] font-bold hover:underline"
+          >
+            Back to Home
+          </button>
+        </div>
+      </footer>
       {/* Global CSS keyframes inline embedding */}
       <style>
         {`

@@ -1,13 +1,16 @@
 @import "tailwindcss";
 
 body {
-  cursor: none;
+  cursor: default;
 }
 
 a,
-button,
+button {
+  cursor: pointer;
+}
+
 input,
 textarea,
 select {
-  cursor: none;
+  cursor: text;
 }
