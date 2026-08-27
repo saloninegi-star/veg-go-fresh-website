@@ -17,69 +17,13 @@ import {
   Flower2,
   Minus,
   X,
-  Search,
-  MapPin,
-  ChevronDown,
-  Bot,
-  User,
-  Menu,
-  Instagram,
-  Facebook,
-  Twitter,
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fruits from "../assets/images/fruits.png";
 
-
-/* ---------------------------------------------------------------------- */
-/*  Brand Colors                                                          */
-/* ---------------------------------------------------------------------- */
-const BRAND = {
-  forestGreen: "#135029",
-};
-
-/* ---------------------------------------------------------------------- */
-/*  VegGo Vector Logo Component                                           */
-/* ---------------------------------------------------------------------- */
-export function VegGoLogo({ className = "h-10 w-auto" }: { className?: string }) {
-  return (
-    <div className={`flex items-center select-none cursor-pointer ${className}`}>
-      <svg viewBox="0 0 180 90" className="h-full w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <style type="text/css">
-            {`
-              @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800;900&display=swap');
-              .logo-text-veggo {
-                font-family: 'Poppins', sans-serif;
-                font-size: 48px;
-                font-weight: 900;
-                letter-spacing: -2px;
-              }
-              .logo-text-fresh {
-                font-family: 'Poppins', sans-serif;
-                font-size: 11.5px;
-                font-weight: 800;
-                letter-spacing: 0.28em;
-              }
-            `}
-          </style>
-        </defs>
-        <g transform="translate(80, 2)">
-          <path d="M17 38 C17 29 15 21 10 13" stroke="#128238" strokeWidth="2.5" strokeLinecap="round" />
-          <path d="M17 38 C18 28 22 20 30 13" stroke="#128238" strokeWidth="2.5" strokeLinecap="round" />
-          <path d="M17 34 C11 31 5 25 4 16 C4 11 5 8 6 6 C14 9 19 15 20 23 C20 28 19 32 17 34 Z" fill="#4BAF3D" />
-          <path d="M17 32 C13 23 9 16 6 8.5" stroke="#E8F5E5" strokeWidth="1.3" strokeLinecap="round" opacity="0.8" />
-          <path d="M18 34 C21 24 28 13 41 5 C42 4 43 4 44 4 C42 16 38 27 30 32 C25 34 21 35 18 34 Z" fill="#3F9F36" />
-          <path d="M20 32 C26 23 34 14 41.5 6" stroke="#E8F5E5" strokeWidth="1.3" strokeLinecap="round" opacity="0.8" />
-        </g>
-        <text x="98" y="68" className="logo-text-veggo" textAnchor="end" fill="#128238">Veg</text>
-        <text x="98" y="68" className="logo-text-veggo" textAnchor="start" fill="#F46B16">Go</text>
-        <text x="98" y="81" className="logo-text-fresh" textAnchor="start" fill="#128238">FRESH</text>
-      </svg>
-    </div>
-  );
-}
+// पहले बनाए गए Navbar और VegGoLogo को इम्पोर्ट करें
+import Navbar, { VegGoLogo } from "../components/Navbar"; 
 
 const CATEGORIES = [
   { name: "Vegetables", icon: Salad },
@@ -174,10 +118,17 @@ export default function FruitsPage() {
   const [popup, setPopup] = useState("");
   const [showCart, setShowCart] = useState(false);
 
-  // Navbar related state
+  // Navbar से जुड़े स्टेट्स
   const [mobileNav, setMobileNav] = useState(false);
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const showToast = (msg: string) => {
+    setPopup(msg);
+    setTimeout(() => {
+      setPopup("");
+    }, 2000);
+  };
 
   const handleCategoryClick = (categoryName: string) => {
     if (categoryName === "Vegetables") {
@@ -217,11 +168,7 @@ export default function FruitsPage() {
       return [...previousCart, { id: fruit.id, quantity: 1 }];
     });
 
-    setPopup(`${fruit.name} added to cart`);
-
-    setTimeout(() => {
-      setPopup("");
-    }, 2000);
+    showToast(`${fruit.name} added to cart`);
   };
 
   const increaseQuantity = (id: number) => {
@@ -265,139 +212,18 @@ export default function FruitsPage() {
 
   return (
     <div className="min-h-screen bg-[#FBFDFB] text-slate-800">
-    
-
-      {/* ================= TOP UTILITY BAR ================= */}
-      <div className="bg-[#EAF6EA] text-[#1E5F26] border-b border-[#D8EBD7] px-4 lg:px-10 py-1.5 text-xs hidden md:flex items-center justify-between">
-        <div className="flex items-center gap-1.5 font-medium">
-          <Leaf className="w-3.5 h-3.5 text-[#228B22]" />
-          <span>Eat Fresh, Live Healthy</span>
-        </div>
-
-        <div className="flex items-center gap-1 cursor-pointer hover:opacity-90 transition">
-          <MapPin className="w-3.5 h-3.5 text-[#228B22]" />
-          <span>
-            Delivering to:{" "}
-            <strong className="font-semibold text-[#113B1E]">
-              Kukatpally, Hyderabad
-            </strong>
-          </span>
-          <ChevronDown className="w-3 h-3 text-slate-500 ml-0.5" />
-        </div>
-
-        <div className="flex items-center gap-4 text-[11px] font-medium text-[#1E5F26]">
-          <button className="hover:underline">Become a Seller</button>
-          <span className="text-[#C2DEC1]">|</span>
-          <button className="hover:underline">Offers</button>
-          <span className="text-[#C2DEC1]">|</span>
-          <button className="hover:underline">Help &amp; Support</button>
-          <div className="flex items-center gap-2.5 ml-2 pl-3 border-l border-[#C2DEC1]">
-            <Instagram className="w-3.5 h-3.5 cursor-pointer hover:text-black transition" />
-            <Facebook className="w-3.5 h-3.5 cursor-pointer hover:text-black transition" />
-            <Twitter className="w-3.5 h-3.5 cursor-pointer hover:text-black transition" />
-          </div>
-        </div>
-      </div>
-
-      {/* ================= MAIN HEADER NAVBAR ================= */}
-      <header className="sticky top-0 z-40 bg-white border-b border-[#EEF4ED] shadow-[0_2px_8px_rgba(0,0,0,0.03)]">
-        <div className="max-w-[1400px] mx-auto px-4 lg:px-8 py-3 flex items-center justify-between gap-4">
-          <button
-            onClick={() => setMobileNav(true)}
-            className="lg:hidden p-1.5 rounded-lg hover:bg-emerald-50 text-slate-700"
-            aria-label="Open menu"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-
-          <div
-            className="flex items-center cursor-pointer shrink-0"
-            onClick={() => navigate("/")}
-          >
-            <VegGoLogo className="h-10 md:h-12 w-auto" />
-          </div>
-
-          <button
-            onClick={() => navigate("/")}
-            className="hidden lg:flex items-center gap-2 px-4 py-2.5 rounded-lg text-white text-xs font-bold tracking-wide shrink-0 transition hover:brightness-105 active:scale-98"
-            style={{ backgroundColor: BRAND.forestGreen }}
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
-          </button>
-
-          <div className="flex-1 max-w-xl hidden sm:flex items-center border border-[#DCE8DA] rounded-lg overflow-hidden bg-white focus-within:ring-2 focus-within:ring-[#228B22]/30 transition">
-            <input
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search for fresh fruits and more..."
-              className="flex-1 px-4 py-2 text-xs md:text-sm outline-none text-slate-700 placeholder:text-slate-400 min-w-0"
-            />
-            <div className="flex items-center gap-1 px-3 border-l border-[#DCE8DA] text-xs text-slate-500 bg-slate-50/50 cursor-pointer">
-              <span>All</span>
-              <ChevronDown className="w-3 h-3 text-slate-400" />
-            </div>
-            <button
-              className="px-3.5 py-2.5 text-white transition hover:brightness-105"
-              style={{ backgroundColor: BRAND.forestGreen }}
-              aria-label="Search"
-            >
-              <Search className="w-4 h-4" />
-            </button>
-          </div>
-
-          <div className="flex items-center gap-4 md:gap-6">
-            <div
-              onClick={() => setAiModalOpen(true)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#F0F8EE] border border-[#D5EAD3] cursor-pointer hover:bg-[#E5F3E3] transition"
-            >
-              <div className="w-7 h-7 rounded-full bg-[#135029] flex items-center justify-center text-emerald-200">
-                <Bot className="w-4 h-4" />
-              </div>
-              <div className="leading-tight text-left hidden sm:block">
-                <div className="text-[11px] font-bold text-[#113B1E]">VegGo</div>
-                <div className="text-[9px] text-[#4A7C54] font-medium">AI Assistant</div>
-              </div>
-            </div>
-
-            <div className="hidden md:flex items-center gap-2 cursor-pointer hover:opacity-80 transition">
-              <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 bg-slate-50">
-                <User className="w-4 h-4" />
-              </div>
-              <div className="leading-tight text-left">
-                <div className="text-[10px] text-slate-500 font-medium">My Account</div>
-                <div className="text-xs font-bold text-slate-800 flex items-center gap-0.5">
-                  <span>Hello, Shiva</span>
-                  <ChevronDown className="w-3 h-3 text-slate-400" />
-                </div>
-              </div>
-            </div>
-
-            <div
-              onClick={() => setShowCart(true)}
-              className="flex items-center gap-2.5 cursor-pointer hover:opacity-90 transition select-none"
-            >
-              <div className="relative">
-                <ShoppingCart className="w-6 h-6 text-[#111827]" />
-                {totalCartItems > 0 && (
-                  <span
-                    className="absolute -top-2 -right-2 text-[10px] w-4 h-4 rounded-full flex items-center justify-center text-white font-extrabold"
-                    style={{ backgroundColor: BRAND.forestGreen }}
-                  >
-                    {totalCartItems}
-                  </span>
-                )}
-              </div>
-              <div className="leading-tight text-left hidden sm:block">
-                <div className="text-[10px] text-slate-500 font-medium">Cart</div>
-                <div className="text-xs font-bold text-[#111827]">
-                  ₹{totalCartPrice.toFixed(2)}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      
+      {/* ================= REUSABLE NAVBAR ================= */}
+      <Navbar
+        setMobileNav={setMobileNav}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        setAiModalOpen={setAiModalOpen}
+        setCartOpen={setShowCart}
+        cartCount={totalCartItems}
+        cartTotal={totalCartPrice}
+        showToast={showToast}
+      />
 
       <main className="max-w-[1400px] mx-auto px-4 lg:px-8 py-5">
         <div className="grid lg:grid-cols-[230px_1fr] gap-5 items-start">
@@ -600,11 +426,7 @@ export default function FruitsPage() {
                               onClick={(e) => {
                                 e.stopPropagation();
                                 increaseQuantity(fruit.id);
-                                setPopup(`${fruit.name} added to cart`);
-
-                                setTimeout(() => {
-                                  setPopup("");
-                                }, 2000);
+                                showToast(`${fruit.name} added to cart`);
                               }}
                               className="w-6 h-6 rounded-md bg-[#135029] text-white flex items-center justify-center hover:bg-[#1E7D32] transition"
                             >
@@ -676,9 +498,9 @@ export default function FruitsPage() {
               <ShoppingCart className="w-4 h-4 text-[#135029]" />
             </div>
 
-            <div className="flex-1">
+            <div className="flex-1 text-left">
               <div className="text-xs font-extrabold text-slate-900">
-                Added to cart
+                Notification
               </div>
 
               <div className="text-[11px] text-slate-500 mt-0.5">
@@ -706,7 +528,7 @@ export default function FruitsPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between border-b border-[#EEF4ED] pb-4">
-              <div>
+              <div className="text-left">
                 <h2 className="text-lg font-black text-[#135029]">
                   Your Cart
                 </h2>
@@ -759,7 +581,7 @@ export default function FruitsPage() {
                           referrerPolicy="no-referrer"
                         />
 
-                        <div className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0 text-left">
                           <div className="text-sm font-bold text-slate-900 truncate">
                             {fruit.name}
                           </div>
@@ -846,6 +668,7 @@ export default function FruitsPage() {
                   (q) => (
                     <button
                       key={q}
+                      onClick={() => showToast(`AI Tip loaded for: ${q}`)}
                       className="px-2.5 py-1 rounded-full bg-white border border-[#C2DEC1] text-[#135029] font-medium hover:bg-[#EAF6EA] transition text-[11px]"
                     >
                       {q}
