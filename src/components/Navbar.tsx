@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // useNavigate इम्पोर्टेड है
 import {
   Search,
   MapPin,
@@ -66,7 +67,7 @@ interface NavbarProps {
   searchQuery: string;
   setSearchQuery: (val: string) => void;
   setAiModalOpen: (val: boolean) => void;
-  setCartOpen: (val: boolean) => void;
+  setCartOpen?: (val: boolean) => void; // इसे वैकल्पिक (optional) रखा गया है क्योंकि अब हम कार्ट पेज पर नेविगेट कर रहे हैं
   cartCount: number;
   cartTotal: number;
   showToast: (msg: string) => void;
@@ -82,6 +83,8 @@ export default function Navbar({
   cartTotal,
   showToast,
 }: NavbarProps) {
+  const navigate = useNavigate(); // navigate हुक
+
   return (
     <>
       {/* ================= TOP UTILITY BAR ================= */}
@@ -98,13 +101,13 @@ export default function Navbar({
         </div>
 
         <div className="flex items-center gap-4 text-[11px] font-medium text-[#1E5F26]">
-          <button onClick={() => showToast("Seller portal")} className="hover:underline">
+          <button onClick={() => showToast("Become a Seller portal")} className="hover:underline">
             Become a Seller
           </button>
           <span className="text-[#C2DEC1]">|</span>
-          <button onClick={() => showToast("Offers active")} className="hover:underline">
-            Offers
-          </button>
+          <button onClick={() => navigate("/offers")} className="hover:underline">
+  Offers
+</button>
           <span className="text-[#C2DEC1]">|</span>
           <button onClick={() => showToast("Support")} className="hover:underline">
             Help &amp; Support
@@ -128,7 +131,8 @@ export default function Navbar({
             <Menu className="w-6 h-6" />
           </button>
 
-          <div className="flex items-center cursor-pointer shrink-0">
+          {/* लोगो पर क्लिक करने पर होम पेज (/) पर जाएँगे */}
+          <div className="flex items-center cursor-pointer shrink-0" onClick={() => navigate("/")}>
             <VegGoLogo className="h-10 md:h-12 w-auto" />
           </div>
 
@@ -179,9 +183,10 @@ export default function Navbar({
               </div>
             </div>
 
+            {/* "My Account" बटन पर क्लिक करने पर सीधे '/account' पर नेविगेट करेगा */}
             <div
               id="header-my-account"
-              onClick={() => showToast("Account: Shiva")}
+              onClick={() => navigate("/account")}
               className="hidden md:flex items-center gap-2 cursor-pointer hover:opacity-80 transition"
             >
               <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 bg-slate-50">
@@ -196,9 +201,10 @@ export default function Navbar({
               </div>
             </div>
 
+            {/* कार्ट बटन पर क्लिक करने पर '/cart' पर नेविगेट करेगा */}
             <div
               id="header-cart-btn"
-              onClick={() => setCartOpen(true)}
+              onClick={() => navigate("/cart")}
               className="flex items-center gap-2.5 cursor-pointer hover:opacity-90 transition select-none"
             >
               <div className="relative">

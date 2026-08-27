@@ -233,8 +233,9 @@ export default function CartPage() {
                   <span className="text-lg font-black text-[#135029]">₹{totalAmount.toFixed(2)}</span>
                 </div>
 
+                {/* 'Proceed to Checkout' बटन पर क्लिक करने पर यह आपको '/checkout' यूआरएल पर रीडायरेक्ट करेगा */}
                 <button
-                  onClick={() => showToast("🎉 Order placed! Fast delivery dispatched.")}
+                  onClick={() => navigate("/checkout")}
                   className="w-full mt-4 py-3 rounded-lg text-white text-xs sm:text-sm font-bold tracking-wide shadow-xs transition hover:brightness-105 flex items-center justify-center gap-2"
                   style={{ backgroundColor: BRAND.forestGreen }}
                 >
