@@ -96,10 +96,33 @@ export default function CartPage() {
                   <span>Packaging Charges</span>
                   <span className="font-semibold text-slate-900">₹{packagingCharge.toFixed(2)}</span>
                 </div>
+<<<<<<< HEAD
                 {savings > 0 && (
                   <div className="flex justify-between text-[#228B22] font-semibold pt-1">
                     <span>You save</span>
                     <span>₹{savings.toFixed(2)}</span>
+=======
+
+                {/* 'Proceed to Checkout' बटन पर क्लिक करने पर यह आपको '/checkout' यूआरएल पर रीडायरेक्ट करेगा */}
+                <button
+                  onClick={() => navigate("/checkout")}
+                  className="w-full mt-4 py-3 rounded-lg text-white text-xs sm:text-sm font-bold tracking-wide shadow-xs transition hover:brightness-105 flex items-center justify-center gap-2"
+                  style={{ backgroundColor: BRAND.forestGreen }}
+                >
+                  <span>Proceed to Checkout</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+
+                {amountToFreeDelivery > 0 ? (
+                  <div className="flex items-start gap-1.5 mt-3 text-[10px] text-[#B8860B] font-medium text-left">
+                    <Tag className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                    <span>Add items worth ₹{amountToFreeDelivery.toFixed(0)} more to get FREE delivery!</span>
+                  </div>
+                ) : (
+                  <div className="flex items-start gap-1.5 mt-3 text-[10px] text-[#228B22] font-medium text-left">
+                    <Check className="w-3.5 h-3.5 shrink-0 mt-0.5" strokeWidth={3} />
+                    <span>You've unlocked FREE delivery on this order!</span>
+>>>>>>> e2c4767fb9fb72018b5e9e01b65713fd05fe3ca1
                   </div>
                 )}
               </div>
