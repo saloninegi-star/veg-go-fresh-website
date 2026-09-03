@@ -1,6 +1,6 @@
 import { useCountdown } from "../../hooks/useCountdown";
 import { useToast } from "../../context/ToastContext";
-import flashsale from "../../assets/images/flashsale.png";
+import flashsale from "../../assets/images/flashsale1.png";
 
 const BRAND = { creamSale: "#FAF5EA", forestGreen: "#135029" };
 const SALE_DURATION_SECONDS = 2 * 3600 + 45 * 60 + 5;
@@ -30,7 +30,7 @@ export default function FlashSaleCard() {
             <p className="text-[11px] text-[#5F6D63] font-medium mt-0.5">On Selected Products</p>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-14">
             {[["Hours", h], ["Mins", m], ["Secs", s]].map(([label, value]) => (
               <div key={label} className="flex flex-col items-center">
                 <div className="w-11 h-11 bg-[#dbecd8] rounded-lg flex items-center justify-center text-[#135029] text-base font-extrabold shadow-2xs">
@@ -61,7 +61,7 @@ export default function FlashSaleCard() {
             src={flashsale}
             alt="Vibrant Fresh Vegetables"
             loading="lazy"
-            className="max-h-[200px] w-auto object-contain mix-blend-multiply rounded-xl transform scale-250 -translate-x-15 origin-center transition duration-300"
+            className="max-h-[200px]  relative -right-8 -top-4 w-auto object-contain mix-blend-multiply rounded-xl transform scale-250 -translate-x-15 origin-center transition duration-300"
           />
         </div>
       </div>

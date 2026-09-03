@@ -14,8 +14,8 @@ export default function LeafyGreensPage() {
 
   return (
     <main className="max-w-[1400px] mx-auto px-4 lg:px-8 py-5">
-      <div className="grid lg:grid-cols-[220px_1fr] gap-5 items-start">
-        <CategorySidebar variant="page" />
+      <div>
+        {/* <CategorySidebar variant="page" /> */}
 
         <div className="min-w-0 space-y-6">
           <section className="rounded-2xl overflow-hidden border border-[#DCEAD9] bg-[#EAF5E9]">

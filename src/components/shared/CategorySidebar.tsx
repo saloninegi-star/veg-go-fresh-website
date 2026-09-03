@@ -8,7 +8,9 @@ interface CategorySidebarProps {
   variant?: "home" | "page";
 }
 
-export default function CategorySidebar({ variant = "home" }: CategorySidebarProps) {
+export default function CategorySidebar({
+  variant = "home",
+}: CategorySidebarProps) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -28,15 +30,17 @@ export default function CategorySidebar({ variant = "home" }: CategorySidebarPro
   return (
     <aside
       className={`hidden lg:flex lg:flex-col w-56 shrink-0 rounded-2xl p-2.5 border border-[#E2EFE0] bg-[#F4FAF4] shadow-xs ${
-        variant === "home" ? "self-stretch justify-between" : "lg:sticky lg:top-24"
+        variant === "home"
+          ? "self-stretch justify-between"
+          : "lg:sticky lg:top-24"
       }`}
     >
-      {variant === "page" && (
+   
         <div className="px-3 py-2 mb-2">
           <h3 className="text-sm font-black text-slate-900">Categories</h3>
           <p className="text-[10px] text-slate-400 mt-0.5">Shop by category</p>
         </div>
-      )}
+  
 
       <div className="space-y-0.5">
         {CATEGORIES.map((c) => {
@@ -51,7 +55,9 @@ export default function CategorySidebar({ variant = "home" }: CategorySidebarPro
                   : "text-slate-700 hover:bg-white hover:text-[#135029]"
               }`}
             >
-              <c.icon className={`w-4 h-4 shrink-0 ${isSelected ? "text-[#135029]" : "text-[#2E7D32]"}`} />
+              <c.icon
+                className={`w-4 h-4 shrink-0 ${isSelected ? "text-[#135029]" : "text-[#2E7D32]"}`}
+              />
               <span>{c.name}</span>
             </button>
           );

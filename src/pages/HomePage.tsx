@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <main className="max-w-[1400px] mx-auto px-4 lg:px-8 py-5 space-y-6 w-full">
       <section className="flex flex-col lg:flex-row gap-5 items-stretch relative">
-        <CategorySidebar variant="home" />
+        {/* <CategorySidebar variant="home" /> */}
         <HeroCarousel />
       </section>
 
