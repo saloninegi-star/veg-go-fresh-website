@@ -16,21 +16,75 @@ import {
 export interface Category {
   name: string;
   icon: LucideIcon;
+  key: string;
   route: string;
-  /** whether a page actually exists for this route yet */
-  implemented: boolean;
 }
 
 export const CATEGORIES: Category[] = [
-  { name: "Vegetables", icon: Salad, route: "/", implemented: true },
-  { name: "Fruits", icon: Cherry, route: "/fruits", implemented: true },
-  { name: "Leafy Greens", icon: Leaf, route: "/leafy-greens", implemented: true },
-  { name: "Herbs & Seasoning", icon: Scissors, route: "/herbs-seasoning", implemented: true },
-  { name: "Exotic Vegetables", icon: Sparkles, route: "/exotic-vegetables", implemented: false },
-  { name: "Dairy Products", icon: Milk, route: "/dairy-products", implemented: false },
-  { name: "Eggs", icon: Egg, route: "/eggs", implemented: false },
-  { name: "Pulses & Grains", icon: Wheat, route: "/pulses-grains", implemented: false },
-  { name: "Rice & Millets", icon: Grid3x3, route: "/rice-millets", implemented: false },
-  { name: "Beverages", icon: Coffee, route: "/beverages", implemented: false },
-  { name: "Plants & Pots", icon: Flower2, route: "/plants-pots", implemented: false },
+  {
+    name: "Vegetables",
+    icon: Salad,
+    key: "vegetables",
+    route: "/vegetables",
+  },
+  {
+    name: "Fruits",
+    icon: Cherry,
+    key: "fruits",
+    route: "/fruits",
+  },
+  {
+    name: "Leafy Greens",
+    icon: Leaf,
+    key: "leafy-greens",
+    route: "/leafy-greens",
+  },
+  {
+    name: "Herbs & Seasoning",
+    icon: Scissors,
+    key: "herbs-seasoning",
+    route: "/herbs-seasoning",
+  },
+  {
+    name: "Exotic Vegetables",
+    icon: Sparkles,
+    key: "exotic-vegetables",
+    route: "/exotic-vegetables",
+  },
+  {
+    name: "Dairy Products",
+    icon: Milk,
+    key: "dairy-products",
+    route: "/dairy-products",
+  },
+  {
+    name: "Eggs",
+    icon: Egg,
+    key: "eggs",
+    route: "/eggs",
+  },
+  {
+    name: "Pulses & Grains",
+    icon: Wheat,
+    key: "pulses-grains",
+    route: "/pulses-grains",
+  },
+  {
+    name: "Rice & Millets",
+    icon: Grid3x3,
+    key: "rice-millets",
+    route: "/rice-millets",
+  },
+  {
+    name: "Beverages",
+    icon: Coffee,
+    key: "beverages",
+    route: "/beverages",
+  },
+  {
+    name: "Plants & Pots",
+    icon: Flower2,
+    key: "plants-pots",
+    route: "/plants-pots",
+  },
 ];

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { VegGoLogo } from "../components/Logo";
 import { useToast } from "../context/ToastContext";
-import membershipImg from "../assets/images/membership.png";
+import membershipImg from "../assets/images/membership1.png";
 
 interface OfferCard {
   id: string;
@@ -107,22 +107,46 @@ export default function OffersPage() {
   const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState("all");
 
-  const filteredOffers = activeTab === "all" ? OFFER_CARDS : OFFER_CARDS.filter((card) => card.category === activeTab);
+  const filteredOffers =
+    activeTab === "all"
+      ? OFFER_CARDS
+      : OFFER_CARDS.filter((card) => card.category === activeTab);
 
   return (
-    <main className="max-w-[1400px] mx-auto w-full px-4 lg:px-8 py-8 space-y-8">
+    <main className="max-w-6xl mx-auto w-full px-4 lg:px-8 py-8 space-y-8">
       {/* ================= HERO PROMO BANNER ================= */}
       <section className="bg-gradient-to-r from-[#E6F3E6] to-[#F1F9F1] rounded-3xl p-6 md:p-10 flex flex-col md:flex-row items-center justify-between border border-[#DCEAD9] overflow-hidden shadow-xs relative">
         <div className="space-y-4 text-center md:text-left z-10">
           <div className="flex justify-center md:justify-start">
-            <VegGoLogo className="h-10 md:h-12 w-auto" />
+            <VegGoLogo className="h-10 md:h-20 w-auto" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-black text-[#113B1E] leading-tight">Amazing Offers</h1>
-          <p className="text-sm md:text-base text-[#4A7C54] font-semibold">On Your Favourite Products!</p>
+
+          <div className="relative inline-block">
+            <div className="absolute -inset-6 -z-10 rounded-full bg-[#7BE582]/50 blur-3xl" />
+
+            <h1
+              className="text-3xl md:text-5xl font-bold text-[#113B1E] leading-tight
+    [text-shadow:0_0_10px_rgba(123,229,130,0.45),0_0_25px_rgba(123,229,130,0.35)]"
+            >
+              Amazing Offers
+            </h1>
+
+            <p
+              className="text-2xl text-[#4A7C54] font-semibold
+    [text-shadow:0_0_8px_rgba(123,229,130,0.4)]"
+            >
+              On Your Favourite Products!
+            </p>
+          </div>
         </div>
 
-        <div className="mt-6 md:mt-0 w-64 md:w-80 h-auto shrink-0 flex items-center justify-center">
-          <img src={membershipImg} alt="VegGo Membership Banner" className="w-full h-auto object-contain max-h-44 md:max-h-52" loading="lazy" />
+        <div className="mt-6 md:mt-0 w-64 md:w-[500px]  h-auto shrink-0 flex items-center justify-center">
+          <img
+            src={membershipImg}
+            alt="VegGo Membership Banner"
+            className="w-full h-auto object-contain max-h-44 md:max-h-52"
+            loading="lazy"
+          />
         </div>
       </section>
 
@@ -134,8 +158,10 @@ export default function OffersPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-5 py-2.5 rounded-xl text-xs font-extrabold tracking-wide transition ${
-                isActive ? "bg-[#135029] text-white shadow-xs" : "bg-white border border-[#EAF0EA] text-slate-600 hover:bg-slate-50"
+              className={`px-5 py-2.5 rounded-xl text-sm font-semibold tracking-wide transition ${
+                isActive
+                  ? "bg-[#135029] text-white shadow-xs"
+                  : "bg-white border border-[#EAF0EA] text-slate-600 hover:bg-slate-50"
               }`}
             >
               {tab.label}
@@ -152,17 +178,27 @@ export default function OffersPage() {
             className={`border rounded-3xl p-6 flex flex-col justify-between text-center transition shadow-[0_2px_14px_rgba(0,0,0,0.01)] ${card.theme.bg} ${card.theme.border}`}
           >
             <div>
-              <span className={`text-[10px] font-extrabold tracking-wider block mb-4 ${card.theme.headerText}`}>{card.typeLabel}</span>
-              <h3 className="text-2xl font-black text-slate-800 leading-tight">{card.title}</h3>
-              <p className="text-xs text-slate-500 font-semibold mt-1">{card.sub}</p>
+              <span
+                className={`text-[15px] font-bold tracking-wider block mb-4 ${card.theme.headerText}`}
+              >
+                {card.typeLabel}
+              </span>
+              <h3 className="text-2xl font-bold text-slate-800 leading-tight">
+                {card.title}
+              </h3>
+              <p className="text-xs text-slate-500 font-semibold mt-1">
+                {card.sub}
+              </p>
             </div>
 
             <div className="my-6 flex justify-center">
               {card.code ? (
                 <div
-                  className={`transform -rotate-6 border-2 border-dashed px-5 py-2 rounded-xl font-black text-sm uppercase tracking-widest flex flex-col items-center justify-center ${card.theme.badgeBg} ${card.theme.badgeBorder} ${card.theme.badgeText}`}
+                  className={`transform -rotate-6 border-2 border-dashed px-8 py-2 rounded-xl font-bold text-xl uppercase  flex flex-col items-center justify-center ${card.theme.badgeBg} ${card.theme.badgeBorder} ${card.theme.badgeText}`}
                 >
-                  <span className="text-[7px] font-extrabold text-slate-400 tracking-wider mb-0.5">USE CODE</span>
+                  <span className="text-[12px] font-bold text-slate-400 tracking-wider mb-0.5">
+                    USE CODE
+                  </span>
                   <span>{card.code}</span>
                 </div>
               ) : (
@@ -179,8 +215,12 @@ export default function OffersPage() {
             </div>
 
             <div className="space-y-1 pt-4 border-t border-dashed border-slate-200">
-              <span className="text-[11px] font-bold text-slate-700 block">{card.minOrderLabel}</span>
-              <span className="text-[10px] text-slate-400 font-semibold block">{card.validityLabel}</span>
+              <span className="text-[15px] font-bold text-slate-700 block">
+                {card.minOrderLabel}
+              </span>
+              <span className="text-[12px] text-slate-400 font-semibold block">
+                {card.validityLabel}
+              </span>
             </div>
           </div>
         ))}
