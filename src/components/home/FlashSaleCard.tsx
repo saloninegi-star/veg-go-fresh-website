@@ -19,201 +19,197 @@ export default function FlashSaleCard() {
         w-full
         h-full
         bg-gradient-to-br
-        from-yellow-100
-        via-white
-        to-yellow-100
+        from-[#FEFBE8]
+        via-[#FCFDF8]
+        to-[#F3F9EE]
         rounded-2xl
-        p-3
+        p-3.5
         sm:p-4
         border
-        border-[#F2E8D5]
+        border-[#EBF3E7]
         shadow-sm
         overflow-hidden
+        flex
+        flex-col
+        justify-between
       "
     >
-      <div className="grid grid-cols-12 gap-1.5 sm:gap-2 items-center h-full w-full">
+      {/* 1. DISCOUNT BADGE (Top-Right) */}
+      <div
+        className="
+          absolute
+          top-2.5
+          right-3
+          sm:top-3
+          sm:right-3.5
+          w-7
+          h-7
+          sm:w-8
+          sm:h-8
+          bg-gradient-to-br
+          from-[#FF5252]
+          via-[#E03838]
+          to-[#A31616]
+          rounded-xl
+          flex
+          items-center
+          justify-center
+          -rotate-12
+          z-30
+          shadow-md
+          border border-white/40
+        "
+      >
+        <span className="text-white text-base sm:text-lg font-black">
+          %
+        </span>
+      </div>
 
-        {/* LEFT CONTENT */}
-        <div className="col-span-7 flex flex-col h-full justify-between text-left z-10 min-w-0">
-
-          {/* Heading */}
-          <div className="min-w-0">
-            <div className="flex items-center gap-1">
-              <span className="text-[11px] sm:text-[13px] md:text-[14px] font-black tracking-wider text-[#5F6D63]">
-                FLASH
-              </span>
-
-              <span className="text-[11px] sm:text-[13px] md:text-[14px] font-black tracking-wider text-[#E03838]">
-                SALE
-              </span>
-
-              <svg
-                viewBox="0 0 24 24"
-                className="w-3 h-3 fill-[#F46B16] shrink-0"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-              </svg>
-            </div>
-
-            <h3
-              className="
-                text-base
-                sm:text-lg
-                md:text-xl
-                font-black
-                text-slate-900
-                mt-1
-                leading-tight
-              "
-              style={{ fontFamily: "'Poppins', sans-serif" }}
+      {/* 2. LEFT CONTENT (Locked safely in left 46% - Never Covered) */}
+      <div className="relative z-20 w-[46%] sm:w-[48%] flex flex-col justify-between h-full text-left min-w-0 pointer-events-auto">
+        {/* Titles */}
+        <div className="min-w-0">
+          <div className="flex items-center gap-1.5">
+            <span className="text-[10px] sm:text-[12px] md:text-[13px] font-black tracking-wider text-[#5F6D63]">
+              FLASH
+            </span>
+            <span className="text-[10px] sm:text-[12px] md:text-[13px] font-black tracking-wider text-[#E03838]">
+              SALE
+            </span>
+            <svg
+              viewBox="0 0 24 24"
+              className="w-3.5 h-3.5 fill-[#F46B16] shrink-0"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Up to{" "}
-              <span className="text-[#135029] text-xl sm:text-2xl md:text-[25px]">
-                50%
-              </span>{" "}
-              OFF
-            </h3>
-
-            <p className="text-[9px] sm:text-[11px] md:text-[12px] text-[#5F6D63] font-medium mt-1">
-              On Selected Products
-            </p>
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
           </div>
 
-          {/* TIMER */}
-          <div className="flex gap-1 sm:gap-1.5 mt-2">
-            {[
-              ["Hours", h],
-              ["Mins", m],
-              ["Secs", s],
-            ].map(([label, value]) => (
+          <h3
+            className="
+              text-sm
+              sm:text-base
+              md:text-lg
+              font-black
+              text-slate-900
+              mt-0.5
+              leading-tight
+            "
+            style={{ fontFamily: "'Poppins', sans-serif" }}
+          >
+            Up to{" "}
+            <span className="text-[#135029] text-lg sm:text-xl md:text-2xl">
+              50%
+            </span>{" "}
+            OFF
+          </h3>
+
+          <p className="text-[9px] sm:text-[10px] md:text-[11px] text-slate-500 font-medium mt-0.5 whitespace-nowrap">
+            On Selected Products
+          </p>
+        </div>
+
+        {/* Countdown Timer (Compact & 100% Clear) */}
+        <div className="flex gap-1 sm:gap-1.5 my-2">
+          {[
+            ["Hours", h],
+            ["Mins", m],
+            ["Secs", s],
+          ].map(([label, value]) => (
+            <div key={label} className="flex flex-col items-center">
               <div
-                key={label}
-                className="flex flex-col items-center"
+                className="
+                  w-6
+                  h-6
+                  sm:w-7
+                  sm:h-7
+                  bg-[#EAF6EA]
+                  border
+                  border-[#CFE6CC]
+                  rounded-lg
+                  flex
+                  items-center
+                  justify-center
+                  text-[#135029]
+                  text-[11px]
+                  sm:text-xs
+                  font-bold
+                  shadow-2xs
+                "
               >
-                <div
-                  className="
-                    w-7
-                    h-7
-                    sm:w-8
-                    sm:h-8
-                    md:w-9
-                    md:h-9
-                    bg-gradient-to-br
-                    from-green-400
-                    to-yellow-100
-                    rounded-md
-                    flex
-                    items-center
-                    justify-center
-                    text-[#135029]
-                    text-xs
-                    sm:text-sm
-                    md:text-lg
-                    font-bold
-                  "
-                >
-                  {value}
-                </div>
-
-                <span className="text-[7px] sm:text-[9px] md:text-[10px] text-[#5F6D63] font-semibold mt-0.5">
-                  {label}
-                </span>
+                {value}
               </div>
-            ))}
-          </div>
+              <span className="text-[7px] sm:text-[8px] text-[#5F6D63] font-semibold mt-0.5">
+                {label}
+              </span>
+            </div>
+          ))}
+        </div>
 
-          {/* BUTTON */}
+        {/* Shop Now Button (In front) */}
+        <div className="relative z-20">
           <button
             onClick={() => showToast("Loading Flash Sale deals...")}
             className="
-              w-[82px]
-              sm:w-[100px]
-              md:w-28
+              px-3.5
+              sm:px-4
               py-1.5
               sm:py-2
-              rounded-lg
+              rounded-xl
               text-white
-              text-[9px]
-              sm:text-[11px]
-              md:text-[12px]
-              font-semibold
-              transition
+              text-[10px]
+              sm:text-xs
+              font-bold
+              transition-all
               hover:brightness-110
-              shrink-0
+              active:scale-95
+              shadow-sm
+              cursor-pointer
+              whitespace-nowrap
             "
             style={{ backgroundColor: BRAND.forestGreen }}
           >
             Shop Now
           </button>
         </div>
+      </div>
 
-        {/* RIGHT IMAGE */}
-        <div className="col-span-5 relative h-full flex items-center justify-center min-h-0">
-
-          {/* DISCOUNT BADGE */}
-          <div
-            className="
-              absolute
-              top-1
-              right-0
-              sm:top-0
-              sm:right-1
-              w-7
-              h-7
-              sm:w-8
-              sm:h-8
-              md:w-9
-              md:h-9
-              bg-gradient-to-br
-              from-[#FF4C4C]
-              via-[#E03838]
-              to-[#9B1C1C]
-              rounded-lg
-              flex
-              items-center
-              justify-center
-              -rotate-12
-              z-10
-              border-t
-              border-white/30
-              border-l
-              border-white/30
-            "
-          >
-            <span className="text-white text-lg sm:text-xl md:text-[23px] font-bold">
-              %
-            </span>
-          </div>
-
-          {/* IMAGE */}
-          <img
-            src={flashsale}
-            alt="Vibrant Fresh Vegetables"
-            loading="lazy"
-            className="
-              relative
-              w-auto
-              object-contain
-              mix-blend-multiply
-              rounded-xl
-
-              h-[105px]
-              -right-2
-              -top-2
-
-              sm:h-[125px]
-              sm:-right-3
-              sm:-top-3
-
-              md:h-[145px]
-              md:-right-4
-              md:-top-4
-
-              lg:h-[155px]
-            "
-          />
-        </div>
+      {/* 3. BIG VEGETABLES IMAGE (Badi height, fills the right area like VegGo Plus) */}
+      <div
+        className="
+          absolute
+          bottom-[-4px]
+          right-[-8px]
+          sm:right-[-12px]
+          w-[60%]
+          sm:w-[62%]
+          h-[84%]
+          sm:h-[90%]
+          flex
+          items-end
+          justify-end
+          pointer-events-none
+          z-10
+        "
+      >
+        <img
+          src={flashsale}
+          alt="Fresh Farm Vegetables"
+          loading="lazy"
+          className="
+            w-full
+            h-full
+            max-h-[175px]
+            sm:max-h-[205px]
+            md:max-h-[225px]
+            object-contain
+            object-bottom-right
+            drop-shadow-[0_10px_20px_rgba(0,0,0,0.14)]
+            scale-110
+            sm:scale-115
+            origin-bottom-right
+          "
+        />
       </div>
     </div>
   );

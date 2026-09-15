@@ -19,6 +19,14 @@ const AccountPage = lazy(() => import("../pages/AccountPage"));
 const MyOrdersPage = lazy(() => import("../pages/MyOrdersPage"));
 const OffersPage = lazy(() => import("../pages/OffersPage"));
 
+// ================= COMPANY PAGES (Lazy Loaded) =================
+const AboutPage = lazy(() => import("../pages/company/AboutPage"));
+const FarmerPartnerPage = lazy(() => import("../pages/company/FarmerPartnerPage"));
+const DeliveryPartnerPage = lazy(() => import("../pages/company/DeliveryPartnerPage"));
+const MembershipPage = lazy(() => import("../pages/company/MembershipPage"));
+const QualityLabPage = lazy(() => import("../pages/company/QualityLabPage"));
+const CareersPage = lazy(() => import("../pages/company/CareersPage"));
+
 function PageFallback() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center text-sm text-slate-400">
@@ -36,6 +44,7 @@ function AppRoute() {
             <Suspense fallback={<PageFallback />}>
               <Routes>
                 <Route element={<Layout />}>
+                  {/* Existing Main Routes */}
                   <Route path="/" element={<HomePage />} />
                   <Route path="/fruits" element={<FruitsPage />} />
                   <Route path="/leafy-greens" element={<LeafyGreensPage />} />
@@ -46,6 +55,14 @@ function AppRoute() {
                   <Route path="/account" element={<AccountPage />} />
                   <Route path="/orders" element={<MyOrdersPage />} />
                   <Route path="/offers" element={<OffersPage />} />
+
+                  {/* Company Routes */}
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/partner-with-us" element={<FarmerPartnerPage />} />
+                  <Route path="/delivery-partner" element={<DeliveryPartnerPage />} />
+                  <Route path="/veggo-plus" element={<MembershipPage />} />
+                  <Route path="/quality-assurance" element={<QualityLabPage />} />
+                  <Route path="/careers" element={<CareersPage />} />
                 </Route>
               </Routes>
             </Suspense>

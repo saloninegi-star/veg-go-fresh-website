@@ -40,6 +40,16 @@ export default function Footer() {
     },
   ];
 
+  // Company links configured with their respective routes
+  const companyLinks = [
+    { title: "About VegGo", path: "/about" },
+    { title: "Partner With Us (Farmers)", path: "/partner-with-us" },
+    { title: "Become a Delivery Partner", path: "/delivery-partner" },
+    { title: "VegGo Plus Membership", path: "/veggo-plus" },
+    { title: "Quality Assurance Lab", path: "/quality-assurance" },
+    { title: "Careers & Culture", path: "/careers" },
+  ];
+
   return (
     <footer className="mt-10 sm:mt-12 lg:mt-16 bg-white border-t border-[#E8F2E6] overflow-hidden">
       {/* Features */}
@@ -73,7 +83,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-8 text-left">
           {/* Brand */}
           <div className="lg:col-span-2 space-y-4 lg:pr-6">
-            <VegGoLogo className="h-9 sm:h-10 w-auto" />
+            <div
+              className="cursor-pointer inline-block"
+              onClick={() => {
+                navigate("/");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              <VegGoLogo className="h-9 sm:h-10 w-auto" />
+            </div>
 
             <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed max-w-sm">
               VegGo Fresh brings you farm-harvested vegetables, seasonal fruits,
@@ -130,27 +148,23 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Company Links (Updated with Route Navigation) */}
           <div className="space-y-3">
             <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900">
               Company
             </h4>
 
             <ul className="space-y-2.5 text-[11px] sm:text-xs text-slate-600">
-              {[
-                "About VegGo",
-                "Partner With Us (Farmers)",
-                "Become a Delivery Partner",
-                "VegGo Plus Membership",
-                "Quality Assurance Lab",
-                "Careers & Culture",
-              ].map((item) => (
-                <li key={item}>
+              {companyLinks.map((item) => (
+                <li key={item.title}>
                   <button
-                    onClick={() => showToast(item)}
-                    className="hover:text-[#135029] transition text-left"
+                    onClick={() => {
+                      navigate(item.path);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    className="hover:text-[#135029] hover:underline transition text-left cursor-pointer font-medium"
                   >
-                    {item}
+                    {item.title}
                   </button>
                 </li>
               ))}
@@ -172,23 +186,24 @@ export default function Footer() {
                 window.open(
                   "https://play.google.com",
                   "_blank",
-                  "noopener,noreferrer",
+                  "noopener,noreferrer"
                 );
               }}
               className="
-    w-full
-    flex
-    items-center
-    gap-2.5
-    px-3
-    py-2.5 sm:py-3
-    rounded-xl
-    bg-slate-900
-    text-white
-    text-xs
-    hover:bg-slate-800
-    transition
-  "
+                w-full
+                flex
+                items-center
+                gap-2.5
+                px-3
+                py-2.5 sm:py-3
+                rounded-xl
+                bg-slate-900
+                text-white
+                text-xs
+                hover:bg-slate-800
+                transition
+                cursor-pointer
+              "
             >
               <Smartphone className="w-7 h-7 sm:w-8 sm:h-8 shrink-0 text-emerald-400" />
 
@@ -231,7 +246,6 @@ export default function Footer() {
             flex-col
             sm:flex-row
             items-center
-            sm:items-center
             justify-between
             gap-4
             text-center
@@ -273,7 +287,10 @@ export default function Footer() {
             <span className="hidden sm:inline">•</span>
 
             <button
-              onClick={() => navigate("/")}
+              onClick={() => {
+                navigate("/");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
               className="hover:underline font-semibold text-[#135029]"
             >
               Home

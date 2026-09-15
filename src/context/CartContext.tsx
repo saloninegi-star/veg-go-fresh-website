@@ -26,10 +26,21 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
 
+// Automatically clean and read only valid catalog items
 function readInitialCart(): CartMap {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : {};
+    if (!saved) return {};
+    const parsed = JSON.parse(saved);
+    const cleaned: CartMap = {};
+
+    // Sirf wahi items load honge jo PRODUCT_CATALOG me exist karte hain
+    for (const [id, qty] of Object.entries(parsed)) {
+      if (PRODUCT_CATALOG[id] && typeof qty === "number" && qty > 0) {
+        cleaned[id] = qty;
+      }
+    }
+    return cleaned;
   } catch {
     return {};
   }
@@ -38,13 +49,12 @@ function readInitialCart(): CartMap {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartMap>(readInitialCart);
 
-  // Persist on every change so the cart survives navigation *and* refresh.
+  // Persist on every change
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
     } catch {
-      // localStorage unavailable (private mode, quota, etc.) — cart still
-      // works for the session, it just won't survive a refresh.
+      // localStorage unavailable (private mode, quota, etc.)
     }
   }, [cart]);
 
@@ -80,20 +90,31 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  const clearCart = useCallback(() => setCart({}), []);
+  const clearCart = useCallback(() => {
+    setCart({});
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+  }, []);
 
   const { cartCount, cartTotal, cartMrpTotal } = useMemo(() => {
     let count = 0;
     let total = 0;
     let mrpTotal = 0;
+
     for (const [id, qty] of Object.entries(cart)) {
       const product = PRODUCT_CATALOG[id];
-      count += qty;
-      if (product) {
-        total += product.price * qty;
-        mrpTotal += product.mrp * qty;
+
+      // ✅ Count aur Total dono sirf valid catalog products ke liye add honge
+      if (product && qty > 0) {
+        count += qty;
+        total += (product.price || 0) * qty;
+        mrpTotal += (product.mrp || product.price || 0) * qty;
       }
     }
+
     return { cartCount: count, cartTotal: total, cartMrpTotal: mrpTotal };
   }, [cart]);
 
@@ -109,7 +130,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
       removeItem,
       clearCart,
     }),
-    [cart, cartCount, cartTotal, cartMrpTotal, addToCart, removeFromCart, setQuantity, removeItem, clearCart]
+    [
+      cart,
+      cartCount,
+      cartTotal,
+      cartMrpTotal,
+      addToCart,
+      removeFromCart,
+      setQuantity,
+      removeItem,
+      clearCart,
+    ]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
